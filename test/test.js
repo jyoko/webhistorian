@@ -53,14 +53,14 @@ describe("server", function() {
         var url = "www.example.com";
 
         // Reset the test file and process request
-        fs.closeSync(fs.openSync(archive.paths.list, "w"));
+        fs.closeSync(fs.openSync(__dirname+'/../archives/sites.txt', "w"));
 
         request
           .post("/")
-          .send({ url: url })
+          .send('url='+url)
           .expect(302, function (err) {
             if (!err) {
-              var fileContents = fs.readFileSync(archive.paths.list, 'utf8');
+              var fileContents = fs.readFileSync(__dirname+'/../archives/sites.txt', 'utf8');
               expect(fileContents).to.equal(url + "\n");
             }
 
